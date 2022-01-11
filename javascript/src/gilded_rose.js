@@ -37,29 +37,23 @@ class Shop {
   }
 
   updateUnknown(i) {
+    this.decrementSellIn(i);
     if (this.items[i].quality > 0) {
       this.decrementQuality(i);
     }
-    this.decrementSellIn(i);
-    if (this.items[i].sellIn < 0) {
-      if (this.items[i].quality > 0) {
-        this.decrementQuality(i);
-      }
+    if (this.items[i].sellIn < 0 && this.items[i].quality > 0) {
+      this.decrementQuality(i);
     }
   }
 
   updateBackstage(i) {
     if (this.items[i].quality < 50) {
       this.incrementQuality(i)
-      if (this.items[i].sellIn < 11) {
-        if (this.items[i].quality < 50) {
-          this.incrementQuality(i)
-        }
+      if (this.items[i].sellIn < 11 && this.items[i].quality < 50) {
+        this.incrementQuality(i)
       }
-      if (this.items[i].sellIn < 6) {
-        if (this.items[i].quality < 50) {
-          this.incrementQuality(i)
-        }
+      if (this.items[i].sellIn < 6 && this.items[i].quality < 50) {
+        this.incrementQuality(i)
       }
     }
     this.decrementSellIn(i);
@@ -69,12 +63,10 @@ class Shop {
   }
 
   updateAgedBrie(i) {
-    if (this.items[i].quality < 50) {
-      this.incrementQuality(i)
-    }
     this.decrementSellIn(i);
-    if (this.items[i].sellIn < 0) {
-      if (this.items[i].quality < 50) {
+    if (this.items[i].quality < 50) {
+      this.incrementQuality(i);
+      if (this.items[i].sellIn < 0) {
         this.incrementQuality(i);
       }
     }
