@@ -17,7 +17,7 @@ class Shop {
 
 
   updateQuality() {
-    for (var i = 0; i < this.items.length; i++) {
+    for (let i = 0; i < this.items.length; i++) {
       switch (this.items[i].name) {
         case 'Aged Brie':
           this.updateAgedBrie(this.items[i]);
