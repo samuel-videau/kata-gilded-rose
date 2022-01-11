@@ -52,7 +52,7 @@ class Shop {
               }
             }
           } else {
-            this.items[i].quality = this.items[i].quality - this.items[i].quality;
+            this.resetQuality(i);
           }
         } else {
           if (this.items[i].quality < 50) {
@@ -71,6 +71,10 @@ class Shop {
 
   incrementQuality(i) {
     this.items[i].quality = this.items[i].quality + 1;
+  }
+
+  resetQuality(i) {
+    this.items[i].quality = 0;
   }
 }
 module.exports = {
