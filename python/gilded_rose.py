@@ -24,34 +24,19 @@ class GildedRose(object):
                     and item.name != "Backstage passes to a TAFKAL80ETC concert"
             ):
                 if self.checkQualityGreaterThanZero(item):
-                    # if item.name != "Sulfuras, Hand of Ragnaros":
                     if self.checkIfNotSulphuras(item):
                         self.decreaseItemQuality(item)
             else:
                 if item.quality < 50:
                     self.increaseItemQuality(item)
                     if item.name == "Backstage passes to a TAFKAL80ETC concert":
-                        if item.sell_in < 11:
-                            if item.quality < 50:
-                                self.increaseItemQuality(item)
-
-                        if item.sell_in < 6:
-                            if item.quality < 50:
-                                self.increaseItemQuality(item)
+                        self.backstageTickets(item)
 
             if self.checkIfNotSulphuras(item):
                 self.decreaseSellIn(item)
             if item.sell_in < 0:
-                if item.name != "Aged Brie":
-                    if item.name != "Backstage passes to a TAFKAL80ETC concert":
-                        if self.checkQualityGreaterThanZero(item):
-                            if self.checkIfNotSulphuras(item):
-                                self.decreaseItemQuality(item)
-                    else:
-                        item.quality = item.quality - item.quality
-                else:
-                    if item.quality < 50:
-                        self.increaseItemQuality(item)
+                self.resetItem(item)
+       
 
     def checkQualityGreaterThanZero(self, item):
         if item.quality > 0:
@@ -73,6 +58,28 @@ class GildedRose(object):
         if item.name != "Sulfuras, Hand of Ragnaros":
             return True
         return False
+
+    def backstageTickets(self, item): # find a better name
+        if item.sell_in < 11:
+            if item.quality < 50:
+                self.increaseItemQuality(item)
+
+        if item.sell_in < 6:
+            if item.quality < 50:
+                self.increaseItemQuality(item)
+
+    def resetItem(self, item):
+        if item.name != "Aged Brie":
+
+            if item.name != "Backstage passes to a TAFKAL80ETC concert":
+                if self.checkQualityGreaterThanZero(item):
+                    if self.checkIfNotSulphuras(item):
+                        self.decreaseItemQuality(item)
+            else:
+                item.quality = item.quality - item.quality
+        else:
+            if item.quality < 50:
+                self.increaseItemQuality(item)
 
 if __name__ == "__main__":
     main()
