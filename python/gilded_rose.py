@@ -23,9 +23,9 @@ class GildedRose(object):
                     item.name != "Aged Brie"
                     and item.name != "Backstage passes to a TAFKAL80ETC concert"
             ):
-                # if item.quality > 0:
                 if self.checkQualityGreaterThanZero(item):
-                    if item.name != "Sulfuras, Hand of Ragnaros":
+                    # if item.name != "Sulfuras, Hand of Ragnaros":
+                    if self.checkIfNotSulphuras(item):
                         self.decreaseItemQuality(item)
             else:
                 if item.quality < 50:
@@ -38,13 +38,14 @@ class GildedRose(object):
                         if item.sell_in < 6:
                             if item.quality < 50:
                                 self.increaseItemQuality(item)
-            if item.name != "Sulfuras, Hand of Ragnaros":
-                item.sell_in = item.sell_in - 1
+
+            if self.checkIfNotSulphuras(item):
+                self.decreaseSellIn(item)
             if item.sell_in < 0:
                 if item.name != "Aged Brie":
                     if item.name != "Backstage passes to a TAFKAL80ETC concert":
                         if self.checkQualityGreaterThanZero(item):
-                            if item.name != "Sulfuras, Hand of Ragnaros":
+                            if self.checkIfNotSulphuras(item):
                                 self.decreaseItemQuality(item)
                     else:
                         item.quality = item.quality - item.quality
@@ -57,8 +58,6 @@ class GildedRose(object):
             return True
         return False
 
-    def getItemName(self, item):
-        pass
 
     def increaseItemQuality(self, item):
         item.quality = item.quality+ 1
@@ -66,8 +65,14 @@ class GildedRose(object):
 
     def decreaseItemQuality(self, item):
         item.quality = item.quality- 1
-        # return item.quality
 
+    def decreaseSellIn(self, item):
+        item.sell_in -= 1
+
+    def checkIfNotSulphuras(self, item):
+        if item.name != "Sulfuras, Hand of Ragnaros":
+            return True
+        return False
 
 if __name__ == "__main__":
     main()
