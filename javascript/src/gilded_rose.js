@@ -4,6 +4,70 @@ class Item {
     this.sellIn = sellIn;
     this.quality = quality;
   }
+
+  update() {
+    this.decrementSellIn();
+    if (this.quality > 0) this.decrementQuality();
+    if (this.sellIn < 0 && this.quality > 0) this.decrementQuality();
+  }
+
+  decrementQuality() {
+    this.quality--;
+  }
+
+  incrementQuality() {
+    this.quality++;
+  }
+
+  resetQuality() {
+    this.quality = 0;
+  }
+
+  decrementSellIn() {
+    this.sellIn--;
+  }
+}
+
+class Brie extends Item {
+
+  constructor(name, sellIn, quality){
+    super(name, sellIn, quality);
+  }
+
+  update() {
+    this.decrementSellIn();
+    if (this.quality < 50) {
+      this.incrementQuality();
+      if (this.sellIn < 0) {
+        this.incrementQuality();
+      }
+    }
+  }
+}
+
+class Backstage extends Item{
+
+  constructor(name, sellIn, quality){
+    super(name, sellIn, quality);
+  }
+
+  update() {
+    if (this.quality < 50) this.incrementQuality();
+    if (this.sellIn < 11 && this.quality < 50) this.incrementQuality();
+    if (this.sellIn < 6 && this.quality < 50) this.incrementQuality();
+    this.decrementSellIn();
+    if (this.sellIn < 0) this.resetQuality();
+  }
+}
+
+class Sulfuras extends Item{
+
+  constructor(name, sellIn, quality){
+    super(name, sellIn, quality);
+  }
+
+  update() {
+  }
 }
 
 class Shop {
@@ -18,62 +82,30 @@ class Shop {
 
   updateQuality() {
     for (let i = 0; i < this.items.length; i++) {
+      let item;
       switch (this.items[i].name) {
         case 'Aged Brie':
-          this.updateAgedBrie(this.items[i]);
+          item = new Brie(this.items[i].name, this.items[i].sellIn, this.items[i].quality)
           break;
         case 'Backstage passes to a TAFKAL80ETC concert':
-          this.updateBackstage(this.items[i]);
+          item = new Backstage(this.items[i].name, this.items[i].sellIn, this.items[i].quality)
           break;
         case 'Sulfuras, Hand of Ragnaros':
+          item = new Sulfuras(this.items[i].name, this.items[i].sellIn, this.items[i].quality)
           break;
         default:
-          this.updateUnknown(this.items[i]);
+          item = new Item(this.items[i].name, this.items[i].sellIn, this.items[i].quality)
           break;
+      }
+      item.update();
+      this.items[i] = {
+        name: item.name,
+        sellIn: item.sellIn,
+        quality: item.quality
       }
     }
 
     return this.items;
-  }
-
-  updateUnknown(item) {
-    this.decrementSellIn(item);
-    if (item.quality > 0) this.decrementQuality(item);
-    if (item.sellIn < 0 && item.quality > 0) this.decrementQuality(item);
-  }
-
-  updateBackstage(item) {
-    if (item.quality < 50) this.incrementQuality(item);
-    if (item.sellIn < 11 && item.quality < 50) this.incrementQuality(item);
-    if (item.sellIn < 6 && item.quality < 50) this.incrementQuality(item);
-    this.decrementSellIn(item);
-    if (item.sellIn < 0) this.resetQuality(item);
-  }
-
-  updateAgedBrie(item) {
-    this.decrementSellIn(item);
-    if (item.quality < 50) {
-      this.incrementQuality(item);
-      if (item.sellIn < 0) {
-        this.incrementQuality(item);
-      }
-    }
-  }
-
-  decrementQuality(item) {
-    item.quality--;
-  }
-
-  incrementQuality(item) {
-    item.quality++;
-  }
-
-  resetQuality(item) {
-    item.quality = 0;
-  }
-
-  decrementSellIn(item) {
-    item.sellIn--;
   }
 }
 module.exports = {
