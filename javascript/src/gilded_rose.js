@@ -94,15 +94,10 @@ class Shop {
           item = new Sulfuras(this.items[i].name, this.items[i].sellIn, this.items[i].quality)
           break;
         default:
-          item = new Item(this.items[i].name, this.items[i].sellIn, this.items[i].quality)
-          break;
+          item = this.items[i];
       }
       item.update();
-      this.items[i] = {
-        name: item.name,
-        sellIn: item.sellIn,
-        quality: item.quality
-      }
+      this.items[i] = item;
     }
 
     return this.items;
