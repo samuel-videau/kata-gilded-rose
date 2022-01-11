@@ -66,11 +66,11 @@ class Shop {
   }
 
   decrementQuality(i) {
-    this.items[i].quality = this.items[i].quality - 1;
+    this.items[i].quality--;
   }
 
   incrementQuality(i) {
-    this.items[i].quality = this.items[i].quality + 1;
+    this.items[i].quality++;
   }
 
   resetQuality(i) {
