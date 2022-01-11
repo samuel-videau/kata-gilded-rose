@@ -38,28 +38,16 @@ class Shop {
 
   updateUnknown(item) {
     this.decrementSellIn(item);
-    if (item.quality > 0) {
-      this.decrementQuality(item);
-    }
-    if (item.sellIn < 0 && item.quality > 0) {
-      this.decrementQuality(item);
-    }
+    if (item.quality > 0) this.decrementQuality(item);
+    if (item.sellIn < 0 && item.quality > 0) this.decrementQuality(item);
   }
 
   updateBackstage(item) {
-    if (item.quality < 50) {
-      this.incrementQuality(item)
-      if (item.sellIn < 11 && item.quality < 50) {
-        this.incrementQuality(item)
-      }
-      if (item.sellIn < 6 && item.quality < 50) {
-        this.incrementQuality(item)
-      }
-    }
+    if (item.quality < 50) this.incrementQuality(item);
+    if (item.sellIn < 11 && item.quality < 50) this.incrementQuality(item);
+    if (item.sellIn < 6 && item.quality < 50) this.incrementQuality(item);
     this.decrementSellIn(item);
-    if (item.sellIn < 0) {
-      this.resetQuality(item);
-    }
+    if (item.sellIn < 0) this.resetQuality(item);
   }
 
   updateAgedBrie(item) {
