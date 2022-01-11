@@ -20,52 +20,64 @@ class Shop {
     for (var i = 0; i < this.items.length; i++) {
       switch (this.items[i].name) {
         case 'Aged Brie':
-          if (this.items[i].quality < 50) {
-            this.incrementQuality(i)
-          }
-          this.decrementSellIn(i);
-          if (this.items[i].sellIn < 0) {
-            if (this.items[i].quality < 50) {
-              this.incrementQuality(i);
-            }
-          }
+          this.updateAgedBrie(i);
           break;
         case 'Backstage passes to a TAFKAL80ETC concert':
-          if (this.items[i].quality < 50) {
-            this.incrementQuality(i)
-            if (this.items[i].sellIn < 11) {
-              if (this.items[i].quality < 50) {
-                this.incrementQuality(i)
-              }
-            }
-            if (this.items[i].sellIn < 6) {
-              if (this.items[i].quality < 50) {
-                this.incrementQuality(i)
-              }
-            }
-          }
-          this.decrementSellIn(i);
-          if (this.items[i].sellIn < 0) {
-            this.resetQuality(i);
-          }
+          this.updateBackstage(i);
           break;
         case 'Sulfuras, Hand of Ragnaros':
           break;
         default:
-          if (this.items[i].quality > 0) {
-            this.decrementQuality(i);
-          }
-          this.decrementSellIn(i);
-          if (this.items[i].sellIn < 0) {
-            if (this.items[i].quality > 0) {
-                this.decrementQuality(i);
-            }
-          }
+          this.updateUnknown(i);
           break;
       }
     }
 
     return this.items;
+  }
+
+  updateUnknown(i) {
+    if (this.items[i].quality > 0) {
+      this.decrementQuality(i);
+    }
+    this.decrementSellIn(i);
+    if (this.items[i].sellIn < 0) {
+      if (this.items[i].quality > 0) {
+        this.decrementQuality(i);
+      }
+    }
+  }
+
+  updateBackstage(i) {
+    if (this.items[i].quality < 50) {
+      this.incrementQuality(i)
+      if (this.items[i].sellIn < 11) {
+        if (this.items[i].quality < 50) {
+          this.incrementQuality(i)
+        }
+      }
+      if (this.items[i].sellIn < 6) {
+        if (this.items[i].quality < 50) {
+          this.incrementQuality(i)
+        }
+      }
+    }
+    this.decrementSellIn(i);
+    if (this.items[i].sellIn < 0) {
+      this.resetQuality(i);
+    }
+  }
+
+  updateAgedBrie(i) {
+    if (this.items[i].quality < 50) {
+      this.incrementQuality(i)
+    }
+    this.decrementSellIn(i);
+    if (this.items[i].sellIn < 0) {
+      if (this.items[i].quality < 50) {
+        this.incrementQuality(i);
+      }
+    }
   }
 
   decrementQuality(i) {
