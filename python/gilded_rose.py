@@ -19,10 +19,7 @@ class GildedRose(object):
 
     def update_quality(self):
         for item in self.items:
-            if (
-                    item.name != "Aged Brie"
-                    and item.name != "Backstage passes to a TAFKAL80ETC concert"
-            ):
+            if item.name != "Aged Brie" and item.name != "Backstage passes to a TAFKAL80ETC concert":
                 if self.checkQualityGreaterThanZero(item):
                     if self.checkIfNotSulphuras(item):
                         self.decreaseItemQuality(item)
@@ -36,7 +33,7 @@ class GildedRose(object):
                 self.decreaseSellIn(item)
             if item.sell_in < 0:
                 self.resetItem(item)
-       
+
 
     def checkQualityGreaterThanZero(self, item):
         if item.quality > 0:
@@ -48,16 +45,20 @@ class GildedRose(object):
         item.quality = item.quality+ 1
         # return item.quality
 
+
     def decreaseItemQuality(self, item):
         item.quality = item.quality- 1
 
+
     def decreaseSellIn(self, item):
         item.sell_in -= 1
+
 
     def checkIfNotSulphuras(self, item):
         if item.name != "Sulfuras, Hand of Ragnaros":
             return True
         return False
+
 
     def backstageTickets(self, item): # find a better name
         if item.sell_in < 11:
@@ -67,6 +68,7 @@ class GildedRose(object):
         if item.sell_in < 6:
             if item.quality < 50:
                 self.increaseItemQuality(item)
+
 
     def resetItem(self, item):
         if item.name != "Aged Brie":
