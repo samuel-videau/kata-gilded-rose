@@ -20,23 +20,24 @@ class GildedRose(object):
     def update_quality(self):
         for item in self.items:
             if (
-                item.name != "Aged Brie"
-                and item.name != "Backstage passes to a TAFKAL80ETC concert"
+                    item.name != "Aged Brie"
+                    and item.name != "Backstage passes to a TAFKAL80ETC concert"
             ):
                 # if item.quality > 0:
                 if self.checkQualityGreaterThanZero(item):
                     if item.name != "Sulfuras, Hand of Ragnaros":
-                        item.quality = item.quality - 1
+                        self.decreaseItemQuality(item)
             else:
                 if item.quality < 50:
-                    item.quality = item.quality + 1
+                    self.increaseItemQuality(item)
                     if item.name == "Backstage passes to a TAFKAL80ETC concert":
                         if item.sell_in < 11:
                             if item.quality < 50:
-                                item.quality = item.quality + 1
+                                self.increaseItemQuality(item)
+
                         if item.sell_in < 6:
                             if item.quality < 50:
-                                item.quality = item.quality + 1
+                                self.increaseItemQuality(item)
             if item.name != "Sulfuras, Hand of Ragnaros":
                 item.sell_in = item.sell_in - 1
             if item.sell_in < 0:
@@ -44,17 +45,29 @@ class GildedRose(object):
                     if item.name != "Backstage passes to a TAFKAL80ETC concert":
                         if self.checkQualityGreaterThanZero(item):
                             if item.name != "Sulfuras, Hand of Ragnaros":
-                                item.quality = item.quality - 1
+                                self.decreaseItemQuality(item)
                     else:
                         item.quality = item.quality - item.quality
                 else:
                     if item.quality < 50:
-                        item.quality = item.quality + 1
+                        self.increaseItemQuality(item)
 
     def checkQualityGreaterThanZero(self, item):
         if item.quality > 0:
             return True
         return False
+
+    def getItemName(self, item):
+        pass
+
+    def increaseItemQuality(self, item):
+        item.quality = item.quality+ 1
+        # return item.quality
+
+    def decreaseItemQuality(self, item):
+        item.quality = item.quality- 1
+        # return item.quality
+
 
 if __name__ == "__main__":
     main()
